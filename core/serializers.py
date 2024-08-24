@@ -1,15 +1,8 @@
-from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
 from core.models import Contato, Formapagamento, Conta
 
 
-class BaseSerializer(serializers.ModelSerializer):
-
-    def save(self, **kwargs):
-        kwargs["user"] = self.context["request"].user
-        return super().save(**kwargs)
-
-
-class ContatoSerializer(BaseSerializer):
+class ContatoSerializer(ModelSerializer):
     class Meta:
         model = Contato
         fields = "__all__"
@@ -18,7 +11,7 @@ class ContatoSerializer(BaseSerializer):
         }
 
 
-class FormapagamentoSerializer(BaseSerializer):
+class FormapagamentoSerializer(ModelSerializer):
     class Meta:
         model = Formapagamento
         fields = "__all__"
@@ -27,7 +20,7 @@ class FormapagamentoSerializer(BaseSerializer):
         }
 
 
-class ContaSerializer(BaseSerializer):
+class ContaSerializer(ModelSerializer):
     class Meta:
         model = Conta
         fields = "__all__"
