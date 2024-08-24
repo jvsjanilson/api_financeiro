@@ -16,15 +16,26 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
-
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from core.views import ContatoViewSet, FormapagamentoViewSet, ContaViewSet
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
+from django.http import HttpResponseRedirect
+
+router = DefaultRouter()
+router.register("contatos", ContatoViewSet)
+router.register("formapagamentos", FormapagamentoViewSet)
+router.register("contas", ContaViewSet)
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("api/", include(router.urls)),
+    path("auth/", include("rest_framework.urls")),
+    path("", lambda request: HttpResponseRedirect("/api/")),
 ]
