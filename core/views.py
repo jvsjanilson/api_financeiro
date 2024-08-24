@@ -18,7 +18,7 @@ from core.filters import ContatoFilter, FormapagamentoFilter, ContaFilter
 class ContatoViewSet(ModelViewSet):
     queryset = Contato.objects.all()
     serializer_class = ContatoSerializer
-    permission_classes = [IsAuthenticated, IsAdminUser, ContatoPermission]
+    permission_classes = [IsAuthenticated, ContatoPermission]
     filter_class = ContatoFilter
 
 
