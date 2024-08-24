@@ -3,6 +3,9 @@ from rest_framework.permissions import BasePermission
 
 class ContatoPermission(BasePermission):
     def has_permission(self, request, view):
+        if request.user and request.user.is_staff:
+            return True
+
         if view.action == "create":
             return request.user.has_perm("core.add_contato")
         elif view.action == ["list", "retrieve"]:
@@ -17,6 +20,9 @@ class ContatoPermission(BasePermission):
 
 class FormapagamentoPermission(BasePermission):
     def has_permission(self, request, view):
+        if request.user and request.user.is_staff:
+            return True
+
         if view.action == "create":
             return request.user.has_perm("core.add_formapagamento")
         elif view.action in ["list", "retrieve"]:
@@ -31,6 +37,9 @@ class FormapagamentoPermission(BasePermission):
 
 class ContaPermission(BasePermission):
     def has_permission(self, request, view):
+        if request.user and request.user.is_staff:
+            return True
+
         if view.action == "create":
             return request.user.has_perm("core.add_conta")
         elif view.action in ["list", "retrieve"]:
