@@ -16,15 +16,13 @@ class FormapagamentoFilter(django_filters.FilterSet):
 
 
 class ContaFilter(django_filters.FilterSet):
-    search = django_filters.CharFilter(method="filter_by_search")
+    descricao = django_filters.CharFilter(lookup_expr="icontains", field_name="descricao")
+    numero_banco = django_filters.CharFilter(lookup_expr="iexact", field_name="numero_banco")
+    numero_agencia = django_filters.CharFilter(lookup_expr="iexact", field_name="numero_agencia")
+    numero_conta = django_filters.CharFilter(lookup_expr="iexact", field_name="numero_conta")
 
     class Meta:
         model = Conta
         fields = {}
 
-    def filter_by_search(self, queryset, name, value):
-        return queryset.filter(
-            Q(descricao__icontains=value)
-            | Q(numero_conta__icontains=value)
-            | Q(numero_agencia__icontains=value)
-        )
+    

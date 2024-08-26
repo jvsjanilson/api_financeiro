@@ -47,6 +47,6 @@ class ContaViewSet(BaseUserViewSet):
     permission_classes = [IsAuthenticated, ContaPermission]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     search_fields = ["descricao", "numero_conta", "numero_agencia", "numero_banco"]
-    filter_order_by = ["numero_agencia"]
-    # filterset_class = ContaFilter
-    # filter_backends = [DjangoFilterBackend]
+    filter_order_by = ["descricao", "numero_conta", "numero_agencia", "numero_banco"]
+    filterset_class = ContaFilter
+  
