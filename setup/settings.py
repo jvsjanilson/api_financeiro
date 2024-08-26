@@ -45,9 +45,9 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    "django_filters",
     "rest_framework",
     "corsheaders",
-    "django_filters",
 ]
 
 LOCAL_APPS = [
@@ -64,6 +64,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = "setup.urls"

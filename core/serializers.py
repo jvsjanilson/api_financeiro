@@ -1,5 +1,7 @@
 from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
 from core.models import Contato, Formapagamento, Conta
+from django.core.validators import MaxLengthValidator
 
 
 class ContatoSerializer(ModelSerializer):
@@ -21,9 +23,18 @@ class FormapagamentoSerializer(ModelSerializer):
 
 
 class ContaSerializer(ModelSerializer):
+    numero_banco = serializers.CharField(validators=[MaxLengthValidator(3)])
+
     class Meta:
         model = Conta
-        fields = "__all__"
+        fields = (
+            "id",
+            "numero_conta",
+            "numero_banco",
+            "numero_agencia",
+            "descricao",
+            "saldo",
+        )
         extra_kwargs = {
             "user": {"read_only": True},
         }

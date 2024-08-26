@@ -1,3 +1,4 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.viewsets import ModelViewSet
 from core.models import Contato, Formapagamento, Conta
 from rest_framework.permissions import IsAuthenticated
@@ -43,4 +44,5 @@ class ContaViewSet(BaseUserViewSet):
     queryset = Conta.objects.all()
     serializer_class = ContaSerializer
     permission_classes = [IsAuthenticated, ContaPermission]
-    filter_class = ContaFilter
+    filterset_class = ContaFilter
+    # filter_backends = [DjangoFilterBackend]
