@@ -31,14 +31,17 @@ class ContatoViewSet(BaseUserViewSet):
     queryset = Contato.objects.all()
     serializer_class = ContatoSerializer
     permission_classes = [IsAuthenticated, ContatoPermission]
-    filter_class = ContatoFilter
+    filterset_class = ContatoFilter
 
 
 class FormapagamentoViewSet(BaseUserViewSet):
     queryset = Formapagamento.objects.all()
     serializer_class = FormapagamentoSerializer
     permission_classes = [IsAuthenticated, FormapagamentoPermission]
-    filter_class = FormapagamentoFilter
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ["codigo", "descricao"]
+    filter_order_by = ["codigo", "descricao"]
+    filterset_class = FormapagamentoFilter
 
 
 class ContaViewSet(BaseUserViewSet):
