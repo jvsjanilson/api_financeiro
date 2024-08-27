@@ -16,7 +16,8 @@ class ContatoSerializer(ModelSerializer):
 class FormapagamentoSerializer(ModelSerializer):
     class Meta:
         model = Formapagamento
-        fields = "__all__"
+        #fields = "__all__"
+        exclude = ["created_at", "updated_at"]
         extra_kwargs = {
             "user": {"read_only": True},
         }

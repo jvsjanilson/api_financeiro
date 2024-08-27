@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from core.views import ContatoViewSet, FormapagamentoViewSet, ContaViewSet
+from financeiro.views import ReceberViewSet
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -29,6 +30,7 @@ router = DefaultRouter()
 router.register("contatos", ContatoViewSet)
 router.register("formapagamentos", FormapagamentoViewSet)
 router.register("contas", ContaViewSet)
+router.register("recebers", ReceberViewSet)
 
 
 urlpatterns = [
