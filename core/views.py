@@ -13,6 +13,7 @@ from core.permissions import (
     FormapagamentoPermission,
     ContaPermission,
 )
+from drf_yasg.utils import swagger_auto_schema
 
 from core.filters import ContatoFilter, FormapagamentoFilter, ContaFilter
 
@@ -53,4 +54,23 @@ class ContaViewSet(BaseUserViewSet):
     search_fields = ["descricao", "numero_conta", "numero_agencia", "numero_banco"]
     filter_order_by = ["descricao", "numero_conta", "numero_agencia", "numero_banco"]
     filterset_class = ContaFilter
-  
+    
+    @swagger_auto_schema(operation_description="Listagem de contas")
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
+    @swagger_auto_schema(operation_description="Criação de contas")
+    def create(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
+    
+    @swagger_auto_schema(operation_description="Detalhes de contas")
+    def retrieve(self, request, *args, **kwargs):
+        return super().retrieve(request, *args, **kwargs)
+    
+    @swagger_auto_schema(operation_description="Atualização de contas")
+    def update(self, request, *args, **kwargs):
+        return super().update(request, *args, **kwargs)
+    
+    @swagger_auto_schema(operation_description="Remover contas")
+    def destroy(self, request, *args, **kwargs):
+        return super().destroy(request, *args, **kwargs)
