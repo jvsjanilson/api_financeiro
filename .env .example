@@ -1,4 +1,4 @@
 SECRET_KEY=
 ALLOWED_HOSTS=*
 DEBUG=True
-DATABASE-URL=mysql://username:password@127.0.0.1:3306/db_name
+DATABASE-URL=sqlite:///db.sqlite3
