@@ -19,7 +19,11 @@ from core.filters import ContatoFilter, FormapagamentoFilter, ContaFilter
 
 
 class BaseUserViewSet(ModelViewSet):
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    ]
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -33,7 +37,16 @@ class ContatoViewSet(BaseUserViewSet):
     queryset = Contato.objects.all()
     serializer_class = ContatoSerializer
     permission_classes = [IsAuthenticated, ContatoPermission]
-    search_fields = ["nome", "telefone", "celular", "endereco", "bairro", "cidade", "complemento"]
+    search_fields = [
+        "nome",
+        "telefone",
+        "celular",
+        "endereco",
+        "bairro",
+        "cidade",
+        "complemento",
+        "cpf_cnpj",
+    ]
     filter_order_by = ["nome"]
     filterset_class = ContatoFilter
 
@@ -54,7 +67,7 @@ class ContaViewSet(BaseUserViewSet):
     search_fields = ["descricao", "numero_conta", "numero_agencia", "numero_banco"]
     filter_order_by = ["descricao", "numero_conta", "numero_agencia", "numero_banco"]
     filterset_class = ContaFilter
-    
+
     @swagger_auto_schema(operation_description="Listagem de contas")
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
@@ -62,15 +75,15 @@ class ContaViewSet(BaseUserViewSet):
     @swagger_auto_schema(operation_description="Criação de contas")
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
-    
+
     @swagger_auto_schema(operation_description="Detalhes de contas")
     def retrieve(self, request, *args, **kwargs):
         return super().retrieve(request, *args, **kwargs)
-    
+
     @swagger_auto_schema(operation_description="Atualização de contas")
     def update(self, request, *args, **kwargs):
         return super().update(request, *args, **kwargs)
-    
+
     @swagger_auto_schema(operation_description="Remover contas")
     def destroy(self, request, *args, **kwargs):
         return super().destroy(request, *args, **kwargs)
