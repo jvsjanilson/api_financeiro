@@ -8,7 +8,8 @@ from decimal import Decimal
 class ContatoSerializer(ModelSerializer):
     class Meta:
         model = Contato
-        fields = "__all__"
+        # fields = "__all__"
+        exclude = ["created_at", "updated_at"]
         extra_kwargs = {
             "user": {"read_only": True},
         }
