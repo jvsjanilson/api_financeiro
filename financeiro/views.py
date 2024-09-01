@@ -7,6 +7,7 @@ from financeiro.filters import ReceberFilter
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from django.http import JsonResponse
 from rest_framework import status
 from django.shortcuts import get_object_or_404
 
@@ -25,15 +26,16 @@ class ReceberViewSet(BaseUserViewSet):
         data_pagamento = request.data.get("data_pagamento")
 
         if not data_pagamento:
-            return Response(
-                {"detail": "Este campo é obrigatório."},
+            return JsonResponse(
+                {"data_pagamento": ["Este campo é obrigatório."]},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         receber.data_pagamento = data_pagamento
         receber.status = "P"
         receber.save()
-        return Response(status=status.HTTP_200_OK)
+
+        return JsonResponse({}, status=status.HTTP_200_OK)
 
     @action(detail=True, methods=["post"], url_path="estornar-receber")
     def estornar_receber(self, request, pk=None):
@@ -41,4 +43,4 @@ class ReceberViewSet(BaseUserViewSet):
         receber.data_pagamento = None
         receber.status = "A"
         receber.save()
-        return Response(status=status.HTTP_200_OK)
+        return JsonResponse({}, status=status.HTTP_200_OK)
