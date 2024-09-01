@@ -1,5 +1,6 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.views import APIView
 from core.models import Contato, Formapagamento, Conta
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import filters
@@ -95,3 +96,15 @@ class ContaViewSet(BaseUserViewSet):
             return Response(serializer.data)
 
         return super().list(request, *args, **kwargs)
+
+
+class UserViewSet(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        user_data = {
+            "username": user.username,
+            "email": user.email,
+        }
+        return Response(user_data)
