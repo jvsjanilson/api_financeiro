@@ -14,8 +14,9 @@ from core.permissions import (
     ContaPermission,
 )
 from drf_yasg.utils import swagger_auto_schema
-
+from rest_framework.response import Response
 from core.filters import ContatoFilter, FormapagamentoFilter, ContaFilter
+from rest_framework.decorators import action
 
 
 class BaseUserViewSet(ModelViewSet):
@@ -50,6 +51,15 @@ class ContatoViewSet(BaseUserViewSet):
     filter_order_by = ["nome"]
     filterset_class = ContatoFilter
 
+    def list(self, request, *args, **kwargs):
+
+        if "all" in request.query_params:
+            queryset = self.filter_queryset(self.get_queryset())
+            serializer = self.get_serializer(queryset, many=True)
+            return Response(serializer.data)
+
+        return super().list(request, *args, **kwargs)
+
 
 class FormapagamentoViewSet(BaseUserViewSet):
     queryset = Formapagamento.objects.all()
@@ -58,6 +68,15 @@ class FormapagamentoViewSet(BaseUserViewSet):
     search_fields = ["codigo", "descricao"]
     filter_order_by = ["codigo", "descricao"]
     filterset_class = FormapagamentoFilter
+
+    def list(self, request, *args, **kwargs):
+
+        if "all" in request.query_params:
+            queryset = self.filter_queryset(self.get_queryset())
+            serializer = self.get_serializer(queryset, many=True)
+            return Response(serializer.data)
+
+        return super().list(request, *args, **kwargs)
 
 
 class ContaViewSet(BaseUserViewSet):
@@ -68,22 +87,11 @@ class ContaViewSet(BaseUserViewSet):
     filter_order_by = ["descricao", "numero_conta", "numero_agencia", "numero_banco"]
     filterset_class = ContaFilter
 
-    @swagger_auto_schema(operation_description="Listagem de contas")
     def list(self, request, *args, **kwargs):
+
+        if "all" in request.query_params:
+            queryset = self.filter_queryset(self.get_queryset())
+            serializer = self.get_serializer(queryset, many=True)
+            return Response(serializer.data)
+
         return super().list(request, *args, **kwargs)
-
-    @swagger_auto_schema(operation_description="Criação de contas")
-    def create(self, request, *args, **kwargs):
-        return super().create(request, *args, **kwargs)
-
-    @swagger_auto_schema(operation_description="Detalhes de contas")
-    def retrieve(self, request, *args, **kwargs):
-        return super().retrieve(request, *args, **kwargs)
-
-    @swagger_auto_schema(operation_description="Atualização de contas")
-    def update(self, request, *args, **kwargs):
-        return super().update(request, *args, **kwargs)
-
-    @swagger_auto_schema(operation_description="Remover contas")
-    def destroy(self, request, *args, **kwargs):
-        return super().destroy(request, *args, **kwargs)
