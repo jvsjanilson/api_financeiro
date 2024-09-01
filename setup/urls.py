@@ -18,7 +18,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from core.views import ContatoViewSet, FormapagamentoViewSet, ContaViewSet
+from core.views import ContatoViewSet, FormapagamentoViewSet, ContaViewSet, UserViewSet
 from financeiro.views import ReceberViewSet
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -34,6 +34,7 @@ router.register("contatos", ContatoViewSet)
 router.register("formapagamentos", FormapagamentoViewSet)
 router.register("contas", ContaViewSet)
 router.register("recebers", ReceberViewSet)
+
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -57,6 +58,7 @@ urlpatterns = [
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("api/", include(router.urls)),
     path("auth/", include("rest_framework.urls")),
+    path("api/user/me/", UserViewSet.as_view(), name="user_me"),
     path(
         "swagger/",
         schema_view.with_ui("swagger", cache_timeout=0),
