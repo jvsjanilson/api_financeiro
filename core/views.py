@@ -18,9 +18,10 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework.response import Response
 from core.filters import ContatoFilter, FormapagamentoFilter, ContaFilter
 from rest_framework.decorators import action
+from core.mixins import HandleRestrictedErrorMixin
 
 
-class BaseUserViewSet(ModelViewSet):
+class BaseUserViewSet(HandleRestrictedErrorMixin, ModelViewSet):
     filter_backends = [
         DjangoFilterBackend,
         filters.SearchFilter,
