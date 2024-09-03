@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
-from financeiro.models import Receber
+from financeiro.models import Titulo
 
 
 class ReceberSerializer(ModelSerializer):
@@ -11,7 +11,7 @@ class ReceberSerializer(ModelSerializer):
     )
 
     class Meta:
-        model = Receber
+        model = Titulo
         # fields = "__all__"
         exclude = ["created_at", "updated_at"]
         extra_kwargs = {

@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from django.http import JsonResponse
 from rest_framework import status
 from django.shortcuts import get_object_or_404
+from financeiro.choices import TipoTituloChoice
 
 
 class ReceberViewSet(BaseUserViewSet):
@@ -19,6 +20,13 @@ class ReceberViewSet(BaseUserViewSet):
     search_fields = ["documento", "contato__nome"]
     filter_order_by = ["documento", "contato__nome"]
     filterset_class = ReceberFilter
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(tipo_titulo=TipoTituloChoice.CR)
+
+    def perform_create(self, serializer):
+        serializer.save(tipo_titulo=TipoTituloChoice.CR)
 
     @action(detail=True, methods=["post"], url_path="baixar-receber")
     def baixar_receber(self, request, pk=None):
