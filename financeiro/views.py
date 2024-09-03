@@ -28,8 +28,8 @@ class ReceberViewSet(BaseUserViewSet):
     def perform_create(self, serializer):
         serializer.save(tipo_titulo=TipoTituloChoice.CR)
 
-    @action(detail=True, methods=["post"], url_path="baixar-receber")
-    def baixar_receber(self, request, pk=None):
+    @action(detail=True, methods=["post"], url_path="baixar")
+    def baixar(self, request, pk=None):
         receber = get_object_or_404(Receber, pk=pk)
         data_pagamento = request.data.get("data_pagamento")
 
@@ -45,8 +45,8 @@ class ReceberViewSet(BaseUserViewSet):
 
         return JsonResponse({}, status=status.HTTP_200_OK)
 
-    @action(detail=True, methods=["post"], url_path="estornar-receber")
-    def estornar_receber(self, request, pk=None):
+    @action(detail=True, methods=["post"], url_path="estornar")
+    def estornar(self, request, pk=None):
         receber = get_object_or_404(Receber, pk=pk)
         receber.data_pagamento = None
         receber.status = "A"
