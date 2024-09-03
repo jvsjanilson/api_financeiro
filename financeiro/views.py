@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from core.views import BaseUserViewSet
-from financeiro.models import Receber
+from financeiro.models import Titulo
 from financeiro.serializers import ReceberSerializer
 from financeiro.permissions import ReceberPermission
 from financeiro.filters import ReceberFilter
@@ -14,7 +14,7 @@ from financeiro.choices import TipoTituloChoice
 
 
 class ReceberViewSet(BaseUserViewSet):
-    queryset = Receber.objects.all()
+    queryset = Titulo.objects.all()
     serializer_class = ReceberSerializer
     permission_classes = [IsAuthenticated, ReceberPermission]
     search_fields = ["documento", "contato__nome"]
