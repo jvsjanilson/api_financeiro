@@ -4,7 +4,9 @@ from financeiro.choices import SituacaoChoice, TipoTituloChoice
 
 
 class Titulo(Base):
-    tipo_titulo = models.CharField(choices=TipoTituloChoice.choices, default=TipoTituloChoice.CR)
+    tipo_titulo = models.CharField(
+        max_length=2, choices=TipoTituloChoice.choices, default=TipoTituloChoice.CR
+    )
     documento = models.CharField(max_length=20)
     contato = models.ForeignKey(Contato, on_delete=models.RESTRICT)
     conta = models.ForeignKey(Conta, on_delete=models.RESTRICT)

@@ -1,9 +1,5 @@
 from django.db import models
 
-class TipoTituloChoice(models.CharChoices):
-    CR = "CR", "Conta Receber"
-    CP = "CP", "Conta Pagar"
-
 
 class EstadoChoice(models.TextChoices):
     AC = "AC", "Acre"

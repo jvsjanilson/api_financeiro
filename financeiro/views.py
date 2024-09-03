@@ -26,11 +26,11 @@ class ReceberViewSet(BaseUserViewSet):
         return queryset.filter(tipo_titulo=TipoTituloChoice.CR)
 
     def perform_create(self, serializer):
-        serializer.save(tipo_titulo=TipoTituloChoice.CR)
+        serializer.save(tipo_titulo=TipoTituloChoice.CR, user=self.request.user)
 
     @action(detail=True, methods=["post"], url_path="baixar")
     def baixar(self, request, pk=None):
-        receber = get_object_or_404(Receber, pk=pk)
+        receber = get_object_or_404(Titulo, pk=pk)
         data_pagamento = request.data.get("data_pagamento")
 
         if not data_pagamento:
@@ -47,7 +47,7 @@ class ReceberViewSet(BaseUserViewSet):
 
     @action(detail=True, methods=["post"], url_path="estornar")
     def estornar(self, request, pk=None):
-        receber = get_object_or_404(Receber, pk=pk)
+        receber = get_object_or_404(Titulo, pk=pk)
         receber.data_pagamento = None
         receber.status = "A"
         receber.save()
