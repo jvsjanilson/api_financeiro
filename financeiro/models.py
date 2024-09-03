@@ -1,9 +1,10 @@
 from django.db import models
 from core.models import Base, Contato, Conta, Formapagamento
-from financeiro.choices import SituacaoChoice
+from financeiro.choices import SituacaoChoice, TipoTituloChoice
 
 
-class Receber(Base):
+class Titulo(Base):
+    tipo_titulo = models.CharField(choices=TipoTituloChoice.choices, default=TipoTituloChoice.CR)
     documento = models.CharField(max_length=20)
     contato = models.ForeignKey(Contato, on_delete=models.RESTRICT)
     conta = models.ForeignKey(Conta, on_delete=models.RESTRICT)
