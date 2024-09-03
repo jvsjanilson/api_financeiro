@@ -52,3 +52,12 @@ class ReceberViewSet(BaseUserViewSet):
         receber.status = "A"
         receber.save()
         return JsonResponse({}, status=status.HTTP_200_OK)
+
+
+class PagarViewSet(ReceberViewSet):
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(tipo_titulo=TipoTituloChoice.CP)
+
+    def perform_create(self, serializer):
+        serializer.save(tipo_titulo=TipoTituloChoice.CP, user=self.request.user)

@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from core.views import ContatoViewSet, FormapagamentoViewSet, ContaViewSet, UserViewSet
-from financeiro.views import ReceberViewSet
+from financeiro.views import ReceberViewSet, PagarViewSet
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -34,6 +34,7 @@ router.register("contatos", ContatoViewSet)
 router.register("formapagamentos", FormapagamentoViewSet)
 router.register("contas", ContaViewSet)
 router.register("recebers", ReceberViewSet)
+router.register("pagars", PagarViewSet)
 
 
 schema_view = get_schema_view(
