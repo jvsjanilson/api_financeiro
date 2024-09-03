@@ -34,7 +34,7 @@ router.register("contatos", ContatoViewSet)
 router.register("formapagamentos", FormapagamentoViewSet)
 router.register("contas", ContaViewSet)
 router.register("recebers", ReceberViewSet)
-router.register("pagars", PagarViewSet)
+router.register("pagars", PagarViewSet, basename="pagar")
 
 
 schema_view = get_schema_view(
