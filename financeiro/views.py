@@ -56,8 +56,10 @@ class ReceberViewSet(BaseUserViewSet):
 
 class PagarViewSet(ReceberViewSet):
     def get_queryset(self):
-        queryset = super().get_queryset()
-        return queryset.filter(tipo_titulo=TipoTituloChoice.CP)
+
+        return Titulo.objects.filter(
+            tipo_titulo=TipoTituloChoice.CP, user=self.request.user
+        )
 
     def perform_create(self, serializer):
         serializer.save(tipo_titulo=TipoTituloChoice.CP, user=self.request.user)
