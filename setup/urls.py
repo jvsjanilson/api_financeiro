@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from core.views import ContatoViewSet, FormapagamentoViewSet, ContaViewSet, UserViewSet
-from financeiro.views import ReceberViewSet, PagarViewSet
+from financeiro.views import ReceberViewSet, PagarViewSet, FluxoCaixaViewSet
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -35,6 +35,7 @@ router.register("formapagamentos", FormapagamentoViewSet)
 router.register("contas", ContaViewSet)
 router.register("recebers", ReceberViewSet)
 router.register("pagars", PagarViewSet, basename="pagar")
+# router.register("fluxocaixa", FluxoCaixaViewSet, basename="fluxocaixa")
 
 
 schema_view = get_schema_view(
@@ -60,6 +61,7 @@ urlpatterns = [
     path("api/", include(router.urls)),
     path("auth/", include("rest_framework.urls")),
     path("api/user/me/", UserViewSet.as_view(), name="user_me"),
+    path("api/fluxocaixa/", FluxoCaixaViewSet.as_view(), name="fluxocaixa"),
     path(
         "swagger/",
         schema_view.with_ui("swagger", cache_timeout=0),

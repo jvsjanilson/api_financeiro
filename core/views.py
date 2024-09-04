@@ -19,6 +19,7 @@ from rest_framework.response import Response
 from core.filters import ContatoFilter, FormapagamentoFilter, ContaFilter
 from rest_framework.decorators import action
 from core.mixins import HandleRestrictedErrorMixin
+from rest_framework import mixins
 
 
 class BaseUserViewSet(HandleRestrictedErrorMixin, ModelViewSet):
