@@ -6,12 +6,12 @@ class ReceberPermission(BasePermission):
             return True
 
         if view.action == "create":
-            return request.user.has_perm("financeiro.add_receber")
+            return request.user.has_perm("financeiro.add_titulo")
         elif view.action in ["list", "retrieve"]:
-            return request.user.has_perm("financeiro.view_receber")
+            return request.user.has_perm("financeiro.view_titulo")
         elif view.action in ["update", "partial_update"]:
-            return request.user.has_perm("financeiro.change_receber")
+            return request.user.has_perm("financeiro.change_titulo")
         elif view.action == "destroy":
-            return request.user.has_perm("financeiro.delete_receber")
+            return request.user.has_perm("financeiro.delete_titulo")
         else:
             return False
