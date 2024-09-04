@@ -8,7 +8,7 @@ class ContatoPermission(BasePermission):
 
         if view.action == "create":
             return request.user.has_perm("core.add_contato")
-        elif view.action == ["list", "retrieve"]:
+        elif view.action in ["list", "retrieve"]:
             return request.user.has_perm("core.view_contato")
         elif view.action in ["update", "partial_update"]:
             return request.user.has_perm("core.change_contato")
