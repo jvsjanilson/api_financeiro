@@ -117,31 +117,63 @@ class FluxoCaixaViewSet(APIView):
             .annotate(saidas=Coalesce(Sum("valor"), Decimal("0.00")))
         )
 
-        # fluxo_caixa = []
-        # for entrada in receber_entradas:
-        #     data = entrada["data_pagamento"]
-        #     valor_entrada = entrada["entradas"]
-        #     valor_saida = 0.00
-        #     saldo = valor_entrada
+        print(pagar_saidas)
 
-        #     for saida in pagar_saidas:
-        #         if saida["data_pagamento"] == data:
-        #             valor_saida = saida["saidas"]
-        #             saldo = valor_entrada - valor_saida
-        #             pagar_saidas = pagar_saidas.exclude(data_pagamento=data)
-        #             break
+        fluxo_caixa = []
+        for entrada in receber_entradas:
+            data = entrada["data_pagamento"]
+            valor_entrada = entrada["entradas"]
+            valor_saida = 0.00
+            saldo = valor_entrada
 
-        #     fluxo_caixa.append(
-        #         {
-        #             "data": data,
-        #             "valor_entrada": valor_entrada,
-        #             "valor_saida": valor_saida,
-        #             "saldo": saldo,
-        #         }
-        #     )
+            for saida in pagar_saidas:
+                if saida["data_pagamento"] == data:
+                    valor_saida = saida["saidas"]
+                    saldo = valor_entrada - valor_saida
+                    pagar_saidas = pagar_saidas.exclude(data_pagamento=data)
+                    break
+
+            fluxo_caixa.append(
+                {
+                    "data": data,
+                    "valor_entrada": valor_entrada,
+                    "valor_saida": valor_saida,
+                    "saldo": saldo,
+                }
+            )
+
+        for saida in pagar_saidas:
+            data = saida["data_pagamento"]
+            valor_saida = saida["saidas"]
+            valor_entrada = 0.00
+            saldo = valor_saida
+
+            for entrada in receber_entradas:
+                if entrada["data_pagamento"] == data:
+                    valor_entrada = entrada["entradas"]
+                    saldo = valor_entrada - valor_saida
+                    receber_entradas = receber_entradas.exclude(data_pagamento=data)
+                    break
+
+            fluxo_caixa.append(
+                {
+                    "data": data,
+                    "valor_entrada": valor_entrada,
+                    "valor_saida": valor_saida,
+                    "saldo": saldo,
+                }
+            )
+
+
+        
+
+        saldo_geral = Decimal('0.00')
+        for f in fluxo_caixa:
+            saldo_geral += f["saldo"]
+
 
         return JsonResponse(
-            {"entradas": list(receber_entradas)}, status=status.HTTP_200_OK
+            {"fluxo": list(fluxo_caixa), "saldo_geral": saldo_geral}, status=status.HTTP_200_OK
         )
 
     # def get(self, request):
