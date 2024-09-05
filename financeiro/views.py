@@ -146,12 +146,12 @@ class FluxoCaixaViewSet(APIView):
             data = saida["data_pagamento"]
             valor_saida = saida["saidas"]
             valor_entrada = 0.00
-            saldo = valor_saida
+            saldo -= valor_saida
 
             for entrada in receber_entradas:
                 if entrada["data_pagamento"] == data:
                     valor_entrada = entrada["entradas"]
-                    saldo = valor_entrada - valor_saida
+                    saldo = valor_saida + valor_entrada  
                     receber_entradas = receber_entradas.exclude(data_pagamento=data)
                     break
 
